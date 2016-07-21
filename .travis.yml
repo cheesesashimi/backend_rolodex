@@ -6,4 +6,5 @@ python:
 script:
     - pip install nose
     - pip install nose-timer
-    - nosetests --exe --with-timer ./
+    - pip install nose-cov
+    - nosetests --exe --with-timer --with-coverage ./
