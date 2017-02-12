@@ -53,12 +53,15 @@ class FormatParser(object):
 
     Args:
       phonenumber: string; The phone number to format.
+
+    Returns:
+      The formatted phone number.
     """
-    phonenumber = string.replace(phonenumber, '(', '')
-    phonenumber = string.replace(phonenumber, ')', '')
-    phonenumber = string.replace(phonenumber, '-', '')
-    phonenumber = string.replace(phonenumber, ' ', '')
-    if len(phonenumber) == 10 and phonenumber.isdigit():
+    chars_to_strip = set(['(', ')', '-', ' '])
+    phonenumber = ''.join((char for char in phonenumber
+                           if char.isdigit() and char not in chars_to_strip))
+
+    if len(phonenumber) == 10:
       return '%s-%s-%s' % (phonenumber[0:3],
                            phonenumber[3:6],
                            phonenumber[6:10])
