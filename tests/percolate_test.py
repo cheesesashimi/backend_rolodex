@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import unittest
-import percolate_solution
+from solution import percolate
 
 
 class OutputFormatTests(unittest.TestCase):
@@ -36,7 +36,7 @@ class OutputFormatTests(unittest.TestCase):
       ]
     }
 
-    result = percolate_solution.parse_data(sample_data)
+    result = percolate.parse_data(sample_data)
     self.assertEquals(result, percolate_expected_output)
 
 
@@ -45,7 +45,7 @@ class FormatParserTests(unittest.TestCase):
     self.test_data = 'Booker T., Washington, 87360, 373 781 7380, yellow'
 
   def testFormatPhoneNumber(self):
-    format_parser = percolate_solution.FormatParser(self.test_data)
+    format_parser = percolate.FormatParser(self.test_data)
 
     valid_number1 = "373-781-7380"
     valid_number2 = "(623)-668-9293"
@@ -64,7 +64,7 @@ class FormatParserTests(unittest.TestCase):
     self.assertFalse(format_parser.FormatPhoneNumber(invalid_number))
 
   def testIsValidZipcode(self):
-    format_parser = percolate_solution.FormatParser(self.test_data)
+    format_parser = percolate.FormatParser(self.test_data)
 
     valid_zipcode = '10003'
     invalid_zipcode1 = '12345678'
@@ -75,7 +75,7 @@ class FormatParserTests(unittest.TestCase):
     self.assertFalse(format_parser.IsValidZipcode(invalid_zipcode2))
 
   def testGetParsedData(self):
-    format_parser = percolate_solution.FormatParser(self.test_data)
+    format_parser = percolate.FormatParser(self.test_data)
 
     expected = {
       "firstname": "Zack",
@@ -105,7 +105,7 @@ class FormatParser1Tests(unittest.TestCase):
       "zipcode": "12345"
     }
 
-    format_parser = percolate_solution.FormatParser1(inputted)
+    format_parser = percolate.FormatParser1(inputted)
     self.assertEquals(format_parser.GetFormattedData(), expected)
 
   def testInvalidFormats(self):
@@ -117,7 +117,7 @@ class FormatParser1Tests(unittest.TestCase):
     ]
 
     for item in invalid_data:
-      parsed_data = percolate_solution.FormatParser1(item).GetFormattedData()
+      parsed_data = percolate.FormatParser1(item).GetFormattedData()
       self.assertFalse(parsed_data)
 
 
@@ -132,7 +132,7 @@ class FormatParser2Tests(unittest.TestCase):
       "zipcode": "83880"
     }
 
-    format_parser = percolate_solution.FormatParser2(inputted)
+    format_parser = percolate.FormatParser2(inputted)
     self.assertEquals(format_parser.GetFormattedData(), expected)
 
   def testFormatParser_MiddleInitial(self):
@@ -145,7 +145,7 @@ class FormatParser2Tests(unittest.TestCase):
       "phonenumber": "839-014-8051"
     }
 
-    format_parser = percolate_solution.FormatParser2(inputted)
+    format_parser = percolate.FormatParser2(inputted)
     self.assertEquals(format_parser.GetFormattedData(), expected)
 
   def testInvalidFormats(self):
@@ -157,7 +157,7 @@ class FormatParser2Tests(unittest.TestCase):
     ]
 
     for item in invalid_data:
-      parsed_data = percolate_solution.FormatParser2(item).GetFormattedData()
+      parsed_data = percolate.FormatParser2(item).GetFormattedData()
       self.assertFalse(parsed_data)
 
 class FormatParser3Tests(unittest.TestCase):
@@ -171,7 +171,7 @@ class FormatParser3Tests(unittest.TestCase):
       "zipcode": "87360"
     }
 
-    format_parser = percolate_solution.FormatParser3(inputted)
+    format_parser = percolate.FormatParser3(inputted)
     self.assertEquals(format_parser.GetFormattedData(), expected)
 
   def testInvalidFormats(self):
@@ -183,7 +183,7 @@ class FormatParser3Tests(unittest.TestCase):
     ]
 
     for item in invalid_data:
-      parsed_data = percolate_solution.FormatParser3(item).GetFormattedData()
+      parsed_data = percolate.FormatParser3(item).GetFormattedData()
       self.assertFalse(parsed_data)
 
 if __name__ == '__main__':
