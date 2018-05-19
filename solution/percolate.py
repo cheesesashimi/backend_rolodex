@@ -13,9 +13,7 @@ class FormatParser(object):
     Args:
       data: string; The line from the given input file to parse.
     """
-    self.entry = entry.split(',')
-    for i, item in enumerate(self.entry):
-      self.entry[i] = item.strip()
+    self.entry = [item.strip() for item in entry.split(',')]
 
   def GetFormattedData(self):
     """Formats and returns the provided data, if valid.
