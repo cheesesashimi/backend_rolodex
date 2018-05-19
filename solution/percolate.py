@@ -153,33 +153,29 @@ def parse_data(data_to_parse):
     A dictionary containing the parsed entries and what lines of the file
     an error occurred on.
   """
-  output = {
-    "entries": [],
-    "errors": []
-  }
+  raw_entries = ((get_parsed_entry(entry), i)
+                 for i, entry in enumerate(data_to_parse))
 
-  for i, line in enumerate(data_to_parse):
-    parsed_entry = get_parsed_entry(line)
-    if parsed_entry:
-      output['entries'].append(parsed_entry)
+  entries = []
+  errors = []
+
+  for entry, line in raw_entries:
+    if entry:
+      entries.append(entry)
     else:
-      output['errors'].append(i)
+      errors.append(line)
 
-  sorted_entries = sorted(output['entries'],
-                          key=lambda entry: '%s %s' % (entry['lastname'],
-                                                       entry['firstname']))
-  output['entries'] = sorted_entries
-  return output
+  entries.sort(key=lambda entry: '%s %s' % (entry['lastname'],
+                                            entry['firstname']))
+  return dict(entries=entries, errors=errors)
 
 def main():
   """The main body of the program."""
-  input_data_file = open('data.in', 'ro')
-  parsed_data = parse_data(input_data_file.read().splitlines())
-  input_data_file.close()
-
-  output_data_file = open('result.out', 'w')
-  output_data_file.write(json.dumps(parsed_data, sort_keys=True, indent=2))
-  output_data_file.close()
-
+  with open('data.in', 'r') as input_file:
+    with open('result.out', 'w') as output_file:
+      parsed_data = parse_data(input_file)
+      json_formatted_data = json.dumps(parsed_data, sort_keys=True, indent=2)
+      output_file.write(json_formatted_data)
+  
 if __name__ == '__main__':
   main()
