@@ -74,25 +74,6 @@ class FormatParserTests(unittest.TestCase):
     self.assertFalse(format_parser.IsValidZipcode(invalid_zipcode1))
     self.assertFalse(format_parser.IsValidZipcode(invalid_zipcode2))
 
-  def testGetParsedData(self):
-    format_parser = percolate.FormatParser(self.test_data)
-
-    expected = {
-      "firstname": "Zack",
-      "lastname": "Zlotnik",
-      "zipcode": "12345",
-      "phonenumber": "1234567890",
-      "color": "Green"
-    }
-
-    result = format_parser.GetParsedData("Zlotnik",
-                                         "Zack",
-                                         "1234567890",
-                                         "Green",
-                                         "12345")
-
-    self.assertEquals(result, expected)
-
 
 class FormatParser1Tests(unittest.TestCase):
   def testFormatParser(self):

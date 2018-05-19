@@ -66,27 +66,6 @@ class FormatParser(object):
                            phonenumber[3:6],
                            phonenumber[6:10])
 
-  def GetParsedData(self, lastname, firstname, phonenumber, color, zipcode):
-    """Converts the parsed data into a dictionary.
-
-    Args:
-      lastname: string; The entry's last name.
-      firstname: string; The entry's first name.
-      phonenumber: string; The entry's phone number.
-      color: string; The entry's color.
-      zipcode: string; The entry's zipcode.
-
-    Returns:
-      A populated dictionary of the arguments.
-    """
-    return {
-      "firstname": firstname,
-      "lastname": lastname,
-      "zipcode": zipcode,
-      "phonenumber": phonenumber,
-      "color": color
-    }
-
 class FormatParser1(FormatParser):
   """Parser for this format: Lastname, Firstname, (703)-742-0996, Blue, 10013
   """
@@ -100,8 +79,11 @@ class FormatParser1(FormatParser):
       return False
 
     lastname, firstname, phonenumber, color, zipcode = self.entry
-    return self.GetParsedData(lastname, firstname, phonenumber,
-                              color, zipcode)
+    return dict(lastname=lastname,
+                firstname=firstname,
+                phonenumber=phonenumber,
+                color=color,
+                zipcode=zipcode)
 
 class FormatParser2(FormatParser):
   """Parser for this format: Firstname Lastname, Red, 11237, 703 955 0373
@@ -120,8 +102,11 @@ class FormatParser2(FormatParser):
     firstname = ' '.join(splitname[0:-1])
     lastname = splitname[-1]
 
-    return self.GetParsedData(lastname, firstname, phonenumber,
-                              color, zipcode)
+    return dict(lastname=lastname,
+                firstname=firstname,
+                phonenumber=phonenumber,
+                color=color,
+                zipcode=zipcode)
 
 class FormatParser3(FormatParser):
   """Parser for this format: Firstname, Lastname, 10013, 646 111 0101, Green
@@ -136,8 +121,12 @@ class FormatParser3(FormatParser):
       return False
 
     firstname, lastname, zipcode, phonenumber, color = self.entry
-    return self.GetParsedData(lastname, firstname, phonenumber,
-                              color, zipcode)
+
+    return dict(lastname=lastname,
+                firstname=firstname,
+                phonenumber=phonenumber,
+                color=color,
+                zipcode=zipcode)
 
 def get_parsed_entry(entry_to_parse):
   """Runs an entry through each of the parsers to determine a match.
