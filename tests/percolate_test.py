@@ -4,8 +4,8 @@ import unittest
 from solution import percolate
 
 
-class OutputFormatTests(unittest.TestCase):
-  def testGivenInputGivesExpectedOutput(self):
+class HelperTests(unittest.TestCase):
+  def testParseFormat_GivenInputYieldsExpectedOutput(self):
     sample_data = [
       'Booker T., Washington, 87360, 373 781 7380, yellow',
       'Chandler, Kerri, (623)-668-9293, pink, 123123121',
@@ -21,7 +21,7 @@ class OutputFormatTests(unittest.TestCase):
         "lastname": "Murphy", 
         "phonenumber": "018-154-6474", 
         "zipcode": "83880"
-      }, 
+      },
       {
         "color": "yellow", 
         "firstname": "Booker T.", 
@@ -29,9 +29,9 @@ class OutputFormatTests(unittest.TestCase):
         "phonenumber": "373-781-7380", 
         "zipcode": "87360"
       }
-      ], 
+      ],
       "errors": [
-        1, 
+        1,
         3
       ]
     }
@@ -39,6 +39,12 @@ class OutputFormatTests(unittest.TestCase):
     result = percolate.parse_data(sample_data)
     self.assertEquals(result, percolate_expected_output)
 
+  def test_strip_nonnumeric_characters(self):
+    input_data = "$*%&^()3432$5 %asj$553309"
+    expected = "34325553309"
+    result = percolate.strip_nonnumeric_characters(input_data)
+    self.assertEquals(expected, result)
+ 
 
 class FormatParserTests(unittest.TestCase):
   def setUp(self):

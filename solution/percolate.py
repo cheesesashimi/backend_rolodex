@@ -1,7 +1,6 @@
 #!/usr/bin/python
 
 import json
-import string
 
 
 class FormatParser(object):
@@ -44,7 +43,8 @@ class FormatParser(object):
     Returns:
       True, if the zipcode is valid.
     """
-    return len(zipcode) == 5 and zipcode.isdigit()
+    stripped_zipcode = strip_nonnumeric_characters(zipcode)
+    return len(stripped_zipcode) == 5
 
   def FormatPhoneNumber(self, phonenumber):
     """Normalizes a phone number into a given format.
@@ -55,14 +55,12 @@ class FormatParser(object):
     Returns:
       The formatted phone number.
     """
-    chars_to_strip = set(['(', ')', '-', ' '])
-    phonenumber = ''.join((char for char in phonenumber
-                           if char.isdigit() and char not in chars_to_strip))
+    stripped_phone_number = strip_nonnumeric_characters(phonenumber)
 
-    if len(phonenumber) == 10:
-      return '%s-%s-%s' % (phonenumber[0:3],
-                           phonenumber[3:6],
-                           phonenumber[6:10])
+    if len(stripped_phone_number) == 10:
+      return '%s-%s-%s' % (stripped_phone_number[0:3],
+                           stripped_phone_number[3:6],
+                           stripped_phone_number[6:10])
 
 class FormatParser1(FormatParser):
   """Parser for this format: Lastname, Firstname, (703)-742-0996, Blue, 10013
@@ -125,6 +123,11 @@ class FormatParser3(FormatParser):
                 phonenumber=phonenumber,
                 color=color,
                 zipcode=zipcode)
+
+def strip_nonnumeric_characters(string_to_strip):
+  return ''.join((character
+                  for character in string_to_strip
+                  if character.isdigit()))
 
 def get_parsed_entry(entry_to_parse):
   """Runs an entry through each of the parsers to determine a match.
